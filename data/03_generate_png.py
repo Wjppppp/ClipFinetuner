@@ -15,22 +15,32 @@ from tqdm import tqdm
 class cfg:
    step=224
 
+def clip_image_from_keypoionts(image, keypoints, step, output):
+
+   for dsname in keypoints:
+      print(keypoints[dsname])
+      k = 0
+      for i,j in tqdm(keypoints[dsname][:]):
+         imagename = "-".join(dsname.split("-")[:-1])
+         img = image[imagename][slice(i, i + step),slice(j, j + step),:]
+
+         if (img.shape == (step,step,3)):
+            imwrite(f"{output}/after_{i}_{j}_{k}.png",img)
+            k += 1
+
 if __name__ == "__main__":
    
    # png folder
-   with contextlib.suppress(FileExistsError):
-      os.makedirs("after_png")
+   output = "collapsed_png"
+   if not os.path.exists(output):
+      os.makedirs(output)
 
    # image h5
    image = h5py.File("after_earthquake_example.h5")
    # keypoints h5
-   keypoints = h5py.File("after_earthquake_example-keypoints.h5")
+   keypoints = h5py.File("collapsed-keypoints.h5")
 
-   for dsname in keypoints:
-      print(keypoints[dsname])
-      for i,j in tqdm(keypoints[dsname][:]):
-         imagename = "-".join(dsname.split("-")[:-1])
-         img = image[imagename][slice(i, i + cfg.step),slice(j, j + cfg.step),:]
+   clip_image_from_keypoionts(image, keypoints, cfg.step, output)
 
-         if (img.shape == (cfg.step,cfg.step,3)):
-            imwrite(f"after_png/after_{i}_{j}.png",img)
+   image.close()
+   keypoints.close()

@@ -18,7 +18,7 @@ To freeze dependencies:
 pip freeze > requirements.txt
 ```
 
-### Docer
+### Docker
 ```
 docker build . -t finetuner:<TAG>
 docker run -it --gpus all --name finetuner -p 8888:8888 -p 6006:6006 --mount type=bind,source="$(pwd)",target=/app finetuner:<TAG>
@@ -27,6 +27,8 @@ jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --debug
 ```
 
 ## Dataset Preparation
+
+**Note: Don't forget change input path before running each python script.**
 
 Go to data folder:
 `cd data`
@@ -48,4 +50,14 @@ To generate png from image.h5 and keypoints.h5:
 python 03_generate_png.py
 ```
 
-**Note: Don't forget change input path before running each python script.**
+To find keypoints for collapsed buildings:
+```
+python 04_find_collapsed.py
+```
+
+To annotate collapsed building point on sample images:
+```
+pyton 05_annotating_image.py
+```
+
+## Finetune Clip
