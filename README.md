@@ -57,7 +57,9 @@ python 04_find_collapsed.py
 
 To annotate collapsed building point on sample images:
 ```
-pyton 05_annotating_image.py
+python 05_annotating_image.py
 ```
 
 ## Finetune Clip
+
+see clip_finetuner.ipynb

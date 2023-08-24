@@ -1,5 +1,5 @@
 dataset
-dataset.zip
+*.zip
 .ipynb_checkpoints
 __MACOSX
 venv
